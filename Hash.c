@@ -60,7 +60,11 @@ int put(hashtable_t* hashTable, char* key, char* value) {
   }
   
   if (ent && ent->key && strcmp(ent->key, key) == 0) {
-    
+     int bin = hash(hashTable, ent->key);
+     hashTable->table[bin]->next->value = strdup(value);
+     hashTable->table[bin]->next->key = ent->key;
+     return 1;
+
   }
   
   else {    // Entity does not exist
@@ -84,10 +88,14 @@ char* get(hashtable_t* hashTable, char* key) {
 	break; 
     ent = ent->next;
   }
-  if (ent)
-    return ent->value;
-  else
-    return NULL;
+  if (ent) {
+    if (ent->next && ent->next->value) {
+         return ent->next->value;
+     }   
+     else
+         return ent->value;
+}
+return NULL;
 }
 
 void freeTable(hashtable_t* hashTable) {
