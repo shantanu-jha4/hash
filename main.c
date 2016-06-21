@@ -18,7 +18,8 @@ int main() {
   add(hashTable, "CompSci", "Security");
   add(hashTable, "Engr", "Mechanical");
   add(hashTable, "Lit", "Lord of the flies");
-  //print(hashTable);
+  add(hashTable, "Engr", "Civil");
+  
   printf("%s\n", get(hashTable, "CompSci"));
   printf("%s\n", get(hashTable, "Engr"));
   printf("%s\n", get(hashTable, "Lit"));
