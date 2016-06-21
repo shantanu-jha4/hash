@@ -42,5 +42,3 @@ char* get(hashtable_t* hashTable, char* key);
 
 // Free's the space table occupies
 void freeTable(hashtable_t* hashTable);
-
-void print(hashtable_t* hashTable);
