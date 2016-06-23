@@ -18,10 +18,14 @@ int main() {
   add(hashTable, "CompSci", "Security");
   add(hashTable, "Engr", "Mechanical");
   add(hashTable, "Lit", "Lord of the flies");
-  //print(hashTable);
-  printf("%s\n", get(hashTable, "CompSci"));
-  printf("%s\n", get(hashTable, "Engr"));
-  printf("%s\n", get(hashTable, "Lit"));
+  add(hashTable, "Engr", "Civil");
+  add(hashTable, "Engr", "Electrical");
+  
+  //printf("%s\n", get(hashTable, "CompSci"));
+  printf("%s\n", get(hashTable, "Engr", "Mechanical"));
+  printf("%s\n", get(hashTable, "Engr", "Electrical"));
+  printf("%s\n", get(hashTable, "Engr", "Civil"));
+  printf("%s\n", get(hashTable, "Lit", "Lord of the flies"));
   freeTable(hashTable);
   return 0;
 }
