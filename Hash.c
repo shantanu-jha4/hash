@@ -46,36 +46,41 @@ int put(hashtable_t* hashTable, char* key, char* value) {
 	return 0;
   
   h_ent* newPair = NULL;
-  h_ent* ent = NULL;
-  h_ent* last = NULL;
+  h_ent* ent = NULL; 
   
   int index = hash(hashTable, key); 
   ent = hashTable->table[index]; //Checking if an element is already there in table[index]
   while (ent && ent->key) { 
-    if (strcmp(key, ent->key) == 0) {
-        break;
+    if (strcmp(key, ent->key) == 0) { 
+	break;
    }
-    last = ent;
     ent = ent->next;
   }
   
   if (ent && ent->key && strcmp(ent->key, key) == 0) {
-    
+     int bin = hash(hashTable, ent->key);
+     h_ent* temp = hashTable->table[bin];
+     while (temp) { 
+       temp = temp->next; 
+     }
+     h_ent* temp_ent = create_newPair(key, value);
+     temp = temp_ent;
+     temp->next = hashTable->table[bin];
+     hashTable->table[bin] = temp;
+     return 1;
   }
-  
   else {    // Entity does not exist
     newPair = create_newPair(key, value);
-    newPair->next = hashTable->table[index];
-    hashTable->table[index] = newPair; 
+    hashTable->table[index] = newPair;
+    hashTable->table[index]->next = NULL;
     return 1;
   }
   free(newPair);
   free(ent);
-  free(last);
   return 0;
 }
 
-char* get(hashtable_t* hashTable, char* key) {
+char* get(hashtable_t* hashTable, char* key, char* value) {
   h_ent* ent = NULL;
   int index = hash(hashTable, key);
   ent = hashTable->table[index]; 
@@ -84,9 +89,13 @@ char* get(hashtable_t* hashTable, char* key) {
 	break; 
     ent = ent->next;
   }
-  if (ent)
-    return ent->value;
-  else
+  if (ent && strcmp(key, ent->key) == 0) { 
+     while (ent) {
+       if (strcmp(ent->value,value) == 0)
+	   return ent->value;
+       ent = ent->next;
+     }
+  }
     return NULL;
 }
 
